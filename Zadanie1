@@ -1,0 +1,104 @@
+Zadanie1/README.md
+
+# Model - Reguła decyzyjna API
+
+Prosty serwis API implementujący regułę decyzyjną zgodnie z wymaganiami zadania.
+
+## Opis
+
+API obsługuje endpoint `/api/v1.0/predict` i przyjmuje dwie liczby. Jeśli suma dwóch liczb jest większa niż 5.8, zwraca jako predykcję wartość 1, w przeciwnym razie zwraca 0.
+
+## Struktura projektu
+
+- `app.py` - główny plik aplikacji Flask
+- `requirements.txt` - zależności projektu
+- `Dockerfile` - konfiguracja kontenera Docker
+- `test_app.py` - testy aplikacji
+- `start.sh` - skrypt startowy do uruchamiania serwera lub testów
+
+## Wymagania
+
+- Python 3.11
+- Flask 3.0.3
+- Docker
+
+## Uruchomienie lokalnie (bez Dockera)
+
+```bash
+# Utworzenie wirtualnego środowiska
+python -m venv .venv
+source .venv/bin/activate  # dla Linux/Mac
+# lub
+.venv\Scripts\activate  # dla Windows
+
+# Instalacja zależności
+pip install -r requirements.txt
+
+# Uruchomienie aplikacji
+flask run
+```
+
+## Uruchomienie z Dockerem
+
+### Budowanie obrazu Docker
+
+```bash
+docker build -t decision-rule-api .
+```
+
+### Uruchomienie kontenera
+
+```bash
+# Uruchomienie serwera API
+docker run -p 5000:5000 decision-rule-api
+
+# Uruchomienie testów
+docker run decision-rule-api ./start.sh test
+```
+
+## Testowanie
+
+Aby uruchomić testy, najpierw uruchom aplikację, a następnie wykonaj:
+
+```bash
+pip install pytest requests
+pytest test_app.py -v
+```
+
+## Przykłady użycia
+
+### Zapytanie
+
+```
+GET http://localhost:5000/api/v1.0/predict?num1=3&num2=4
+```
+
+### Odpowiedź
+
+```json
+{
+  "prediction": 1,
+  "features": {
+    "num1": 3.0,
+    "num2": 4.0
+  }
+}
+```
+
+### Zapytanie z wartościami domyślnymi
+
+```
+GET http://localhost:5000/api/v1.0/predict
+```
+
+### Odpowiedź
+
+```json
+{
+  "prediction": 0,
+  "features": {
+    "num1": 0.0,
+    "num2": 0.0
+  }
+}
+```
