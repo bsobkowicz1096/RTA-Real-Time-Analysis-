@@ -9,7 +9,7 @@ Prosty serwis API implementujący regułę decyzyjną zgodnie z wymaganiami zada
 - `Dockerfile` - konfiguracja kontenera Docker
 - `README.md` - dokumentacja projektu
 
-##⚙️ Funkcjonalności
+## ⚙️ Funkcjonalności
 - Obsługa endpointu `/api/v1.0/predict` przyjmującego parametry `num1` i `num2`
 - Zastosowanie domyślnej wartości 0 dla niepodanych parametrów
 - Implementacja reguły decyzyjnej: jeśli suma > 5.8 zwraca 1, w przeciwnym razie 0
