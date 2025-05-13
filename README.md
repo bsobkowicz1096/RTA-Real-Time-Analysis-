@@ -6,11 +6,11 @@ Repozytorium zawierające projekty przygotowywane na zajęcia z Analizy Danych w
 
 Repozytorium jest podzielone na foldery odpowiadające poszczególnym zadaniom realizowanym w ramach kursu:
 
-### ZADANIE1(./Zadanie1)🔍 - API z regułą decyzyjną
+### [ZADANIE1](./Zadanie1)🔍 - API z regułą decyzyjną
 - Prosty serwis API implementujący regułę decyzyjną
 - Technologie: Python, Flask, Docker
 
-### ZADANIE2(./Zadanie2) 📊 - Strumieniowanie danych w Apache Spark
+### [ZADANIE2](./Zadanie%202) 📊 - Strumieniowanie danych w Apache Spark
 - Implementacja przetwarzania strumieniowego z wykorzystaniem Spark Structured Streaming
 - Analiza i segmentacja danych w czasie rzeczywistym
 - Różne źródła danych: rate, JSON
