@@ -25,7 +25,7 @@ Implementacja zadań z laboratorium 7 dotyczących strumieniowania danych, agreg
 - 🐍 Python 3.x
 - ⚡ Apache Spark
 - 📦 PySpark
-- 🗂️ Kafka-Python (opcjonalnie)
+- 🗂️ Kafka-Python
 
 ## 🚀 Instrukcja uruchomienia
 ### 1. Generator danych (dla zadań z JSON):
