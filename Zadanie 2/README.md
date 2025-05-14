@@ -21,6 +21,19 @@ Implementacja zadań z laboratorium 7 dotyczących strumieniowania danych, agreg
 - Segmentacja klientów na podstawie ich zachowań
 - Różne tryby wyjściowe: append, update, complete
 
+## 📥 Pobranie repozytorium
+
+Aby pobrać to repozytorium, wykonaj następujące kroki:
+
+### 1. Klonowanie repozytorium
+```bash
+# Klonuj repozytorium
+git clone https://github.com/bsobkowicz1096/Real_Time_Analysis.git
+
+# Przejdź do katalogu projektu
+cd Real_Time_Analysis/Zadanie\ 2
+```
+
 ## 🛠️ Wymagania
 - 🐍 Python 3.x
 - ⚡ Apache Spark
