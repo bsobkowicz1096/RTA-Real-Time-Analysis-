@@ -1,96 +1,59 @@
-# 🔍 Zadanie 1 - Model z regułą decyzyjną
+# Zadanie 2 - Strumieniowanie danych w Apache Spark
 
-## 📝 Opis
-Prosty serwis API implementujący regułę decyzyjną zgodnie z wymaganiami zadania. API obsługuje endpoint `/api/v1.0/predict` i przyjmuje dwie liczby. Jeśli suma dwóch liczb jest większa niż 5.8, zwraca jako predykcję wartość 1, w przeciwnym razie zwraca 0.
+## Opis
+Implementacja zadań z laboratorium 7 dotyczących strumieniowania danych, agregacji i segmentacji klientów w czasie rzeczywistym przy użyciu Apache Spark Structured Streaming.
 
-## 📂 Struktura projektu
-- `app.py` - główny plik aplikacji Flask
-- `requirements.txt` - zależności projektu
-- `Dockerfile` - konfiguracja kontenera Docker
-- `README.md` - dokumentacja projektu
+## Struktura projektu
+- `generator.py` - Generator danych JSON do ćwiczeń
+- `rate_source.py` - Wykorzystanie rate jako źródła kontrolowanego strumienia
+- `filtering.py` - Filtrowanie danych bez agregacji (append mode)
+- `json_source.py` - Odczyt strumieniowy z plików JSON
+- `counting.py` - Bezstanowe zliczanie zdarzeń
+- `time_windows.py` - Agregacja w tumbling windows (stałe okna czasowe)
+- `sliding_window.py` - Agregacja w sliding windows (przesuwne okna czasowe)
+- `segmentation.py` - Segmentacja klientów w czasie rzeczywistym
 
-## ⚙️ Funkcjonalności
-- Obsługa endpointu `/api/v1.0/predict` przyjmującego parametry `num1` i `num2`
-- Zastosowanie domyślnej wartości 0 dla niepodanych parametrów
-- Implementacja reguły decyzyjnej: jeśli suma > 5.8 zwraca 1, w przeciwnym razie 0
-- Zwracanie odpowiedzi w formacie JSON z kluczami "prediction" i "features"
+## Wymagania
+- Apache Spark
+- Python 3.x
+- PySpark
 
-## 🛠️ Wymagania
-- 🐍 Python 3.11
-- 🌶️ Flask 3.0.3
-- 🐳 Docker
+## Instrukcja uruchomienia
+1. Uruchom generator danych (dla zadań z JSON):
+   ```bash
+   mkdir -p data/stream
+   python generator.py &
+   ```
 
-## 🚀 Uruchomienie aplikacji
+2. Uruchom wybrane zadanie:
+   ```bash
+   spark-submit rate_source.py
+   ```
 
-### Lokalnie (bez Dockera)
-```bash
-# Instalacja zależności
-pip install -r requirements.txt
+## Opis zadań
 
-# Uruchomienie aplikacji
-flask run
-```
+### 1. Rate Source
+Generuje strumień danych z określoną prędkością (5 wierszy/sekundę) i dodaje kolumny identyfikujące użytkownika i typ zdarzenia.
 
-### Z użyciem Dockera 🐳
-```bash
-# Budowanie obrazu
-docker build -t decision-rule-api .
+### 2. Filtering
+Filtruje dane strumieniowe, wyświetlając tylko zdarzenia typu "purchase".
 
-# Uruchomienie kontenera
-docker run -p 5000:5000 decision-rule-api
-```
+### 3. JSON Source
+Odczytuje dane JSON generowane w czasie rzeczywistym przez generator.py.
 
-## 📊 Przykłady użycia
+### 4. Counting
+Zlicza zdarzenia pogrupowane według typu.
 
-### Przykład 1: Suma większa niż 5.8 ✅
-```
-GET http://localhost:5000/api/v1.0/predict?num1=3&num2=4
-```
+### 5. Time Windows
+Grupuje zdarzenia w 5-minutowych oknach czasowych i zlicza je dla każdego typu zdarzenia.
 
-Odpowiedź:
-```json
-{
-  "prediction": 1,
-  "features": {
-    "num1": 3.0,
-    "num2": 4.0
-  }
-}
-```
+### 6. Sliding Window
+Grupuje zdarzenia w przesuwających się 5-minutowych oknach czasowych z 1-minutowym przesunięciem.
 
-### Przykład 2: Suma mniejsza niż 5.8 ❌
-```
-GET http://localhost:5000/api/v1.0/predict?num1=2&num2=3
-```
+### 7. Segmentation
+Segmentuje użytkowników na kategorie "Buyer", "Cart abandoner" i "Lurker" w oparciu o ich zachowanie.
 
-Odpowiedź:
-```json
-{
-  "prediction": 0,
-  "features": {
-    "num1": 2.0,
-    "num2": 3.0
-  }
-}
-```
-
-### Przykład 3: Z domyślnymi wartościami 🔄
-```
-GET http://localhost:5000/api/v1.0/predict
-```
-
-Odpowiedź:
-```json
-{
-  "prediction": 0,
-  "features": {
-    "num1": 0.0,
-    "num2": 0.0
-  }
-}
-```
-
-## 🔧 Technologie
-- 🐍 Python
-- 🌶️ Flask
-- 🐳 Docker
+## Uwagi
+- Generator tworzy pliki JSON w katalogu `data/stream` co 5 sekund
+- Wszystkie programy automatycznie zatrzymują się po przetworzeniu 5 partii danych
+- Dane są przetwarzane strumieniowo w czasie rzeczywistym
